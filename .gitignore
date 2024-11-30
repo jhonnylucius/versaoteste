@@ -105,6 +105,8 @@ ios/Flutter/FlutterPluginRegistrant.framework
 ios/Flutter/FlutterPluginRegistrant.podspec
 
 
+/google-services.json
+app/google-services.json
 
 
 apphosting.local.yaml
