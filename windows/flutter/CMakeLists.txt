@@ -1,12 +1,20 @@
 # This file controls Flutter-level build steps. It should not be edited.
 cmake_minimum_required(VERSION 3.14)
+project(versaoteste LANGUAGES CXX)
+
 
 set(EPHEMERAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ephemeral")
 
 # Configuration provided via flutter tool.
-include(${EPHEMERAL_DIR}/generated_config.cmake)
+if(EXISTS ${EPHEMERAL_DIR}/generated_config.cmake)
+  if(EXISTS ${EPHEMERAL_DIR}/generated_config.cmake)
+    include(${EPHEMERAL_DIR}/generated_config.cmake)
+  else()
+    message(FATAL_ERROR "Missing generated_config.cmake. Please ensure it is generated or copied to ${EPHEMERAL_DIR}.")
+  endif()
+endif()
+  include(${EPHEMERAL_DIR}/generated_config.cmake)
 
-# TODO: Move the rest of this into files in ephemeral. See
 # https://github.com/flutter/flutter/issues/57146.
 set(WRAPPER_ROOT "${EPHEMERAL_DIR}/cpp_client_wrapper")
 
@@ -19,10 +27,10 @@ endif()
 set(FLUTTER_LIBRARY "${EPHEMERAL_DIR}/flutter_windows.dll")
 
 # Published to parent scope for install step.
-set(FLUTTER_LIBRARY ${FLUTTER_LIBRARY} PARENT_SCOPE)
-set(FLUTTER_ICU_DATA_FILE "${EPHEMERAL_DIR}/icudtl.dat" PARENT_SCOPE)
-set(PROJECT_BUILD_DIR "${PROJECT_DIR}/build/" PARENT_SCOPE)
-set(AOT_LIBRARY "${PROJECT_DIR}/build/windows/app.so" PARENT_SCOPE)
+set(FLUTTER_LIBRARY ${FLUTTER_LIBRARY})
+set(FLUTTER_ICU_DATA_FILE "${EPHEMERAL_DIR}/icudtl.dat")
+set(PROJECT_BUILD_DIR "${PROJECT_DIR}/build/")
+set(AOT_LIBRARY "${PROJECT_DIR}/build/windows/app.so")
 
 list(APPEND FLUTTER_LIBRARY_HEADERS
   "flutter_export.h"
