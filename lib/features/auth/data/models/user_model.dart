@@ -1,33 +1,35 @@
-
-/// Modelo de usuário para representar os dados autenticados
 class UserModel {
-  final String userId;
+  final String id;
+  final String name;
   final String email;
-  final String? displayName;
-  final String? photoUrl;
+  final String profileImageUrl;
+  final String userType; // 'client', 'provider', or 'both'
 
   UserModel({
-    required this.userId,
+    required this.id,
+    required this.name,
     required this.email,
-    this.displayName,
-    this.photoUrl,
+    required this.profileImageUrl,
+    required this.userType,
   });
 
-  factory UserModel.fromMap(Map<String, dynamic> data) {
+  factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      userId: data['userId'],
-      email: data['email'],
-      displayName: data['displayName'],
-      photoUrl: data['photoUrl'],
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      email: map['email'] ?? '',
+      profileImageUrl: map['profileImageUrl'] ?? '',
+      userType: map['userType'] ?? 'client',
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'userId': userId,
+      'id': id,
+      'name': name,
       'email': email,
-      'displayName': displayName,
-      'photoUrl': photoUrl,
+      'profileImageUrl': profileImageUrl,
+      'userType': userType,
     };
   }
 }
