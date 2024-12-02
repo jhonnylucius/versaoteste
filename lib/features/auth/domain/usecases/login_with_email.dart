@@ -1,5 +1,4 @@
 import 'package:versaoteste/features/auth/data/models/auth_response.dart';
-import 'package:versaoteste/features/auth/data/models/user_model.dart';
 import 'package:versaoteste/features/auth/data/repositories/auth_repository.dart';
 
 /// Caso de uso para login com email e senha

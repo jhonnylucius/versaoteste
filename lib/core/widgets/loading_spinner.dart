@@ -7,8 +7,8 @@ class LoadingSpinner extends StatelessWidget {
   const LoadingSpinner({
     this.color = Colors.blue,
     this.size = 50.0,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

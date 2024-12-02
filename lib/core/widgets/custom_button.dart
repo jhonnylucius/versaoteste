@@ -11,15 +11,15 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.color = Colors.blue,
     this.textColor = Colors.white,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: color,
-        onPrimary: textColor,
+        foregroundColor: textColor,
+        backgroundColor: color,
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         textStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
       ),

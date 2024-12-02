@@ -6,7 +6,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
   void _loginWithEmail(BuildContext context) {
     // Adicionar lógica para login com email

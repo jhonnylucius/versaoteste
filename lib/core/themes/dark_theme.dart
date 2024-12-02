@@ -4,15 +4,14 @@ import 'package:versaoteste/core/constants/app_colors.dart';
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: AppColors.primaryColor,
-  accentColor: AppColors.secondaryColor,
   scaffoldBackgroundColor: Colors.black,
   textTheme: TextTheme(
-    headline1: TextStyle(
+    displayLarge: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.bold,
       color: AppColors.backgroundColor,
     ),
-    bodyText1: TextStyle(
+    bodyLarge: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.normal,
       color: AppColors.backgroundColor,
@@ -22,4 +21,6 @@ ThemeData darkTheme = ThemeData(
     buttonColor: AppColors.secondaryColor,
     textTheme: ButtonTextTheme.primary,
   ),
+  colorScheme:
+      ColorScheme.fromSwatch().copyWith(secondary: AppColors.secondaryColor),
 );
