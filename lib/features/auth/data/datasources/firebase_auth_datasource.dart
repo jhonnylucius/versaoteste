@@ -62,10 +62,11 @@ class FirebaseAuthDatasource {
   UserModel? _userFromFirebaseUser(User? user) {
     if (user == null) return null;
     return UserModel(
-      userId: user.uid,
+      id: user.uid,
+      name: user.displayName ?? '',
       email: user.email ?? '',
-      displayName: user.displayName,
-      photoUrl: user.photoURL,
+      profileImageUrl: user.photoURL ?? '',
+      userType: 'default', // or any appropriate value
     );
   }
 }
