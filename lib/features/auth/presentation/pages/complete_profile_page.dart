@@ -1,39 +1,54 @@
 import 'package:flutter/material.dart';
 
 class CompleteProfilePage extends StatelessWidget {
-  const CompleteProfilePage({super.key});
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final String userType; // 'client', 'provider', or 'both'
+
+  CompleteProfilePage({super.key, required this.userType});
+
+  void _saveProfile(BuildContext context) {
+    // Adicionar lógica para salvar o perfil
+  }
 
   @override
   Widget build(BuildContext context) {
-    final nameController = TextEditingController();
-    final phoneController = TextEditingController();
-    final addressController = TextEditingController();
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Completar Perfil")),
+      appBar: AppBar(
+        title: Text("Completar Perfil"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: "Nome Completo"),
+              controller: addressController,
+              decoration: InputDecoration(labelText: "Endereço"),
             ),
+            SizedBox(height: 8.0),
             TextField(
               controller: phoneController,
-              decoration: const InputDecoration(labelText: "Telefone"),
+              decoration: InputDecoration(labelText: "Telefone"),
               keyboardType: TextInputType.phone,
             ),
-            TextField(
-              controller: addressController,
-              decoration: const InputDecoration(labelText: "Endereço"),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // Salvar informações do perfil no banco de dados ou backend
+            SizedBox(height: 8.0),
+            DropdownButtonFormField<String>(
+              value: userType,
+              items: [
+                DropdownMenuItem(value: 'client', child: Text("Cliente")),
+                DropdownMenuItem(value: 'provider', child: Text("Prestador")),
+                DropdownMenuItem(value: 'both', child: Text("Ambos")),
+              ],
+              onChanged: (value) {
+                // Atualizar o tipo de usuário
               },
-              child: const Text("Salvar"),
+              decoration: InputDecoration(labelText: "Tipo de Usuário"),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () => _saveProfile(context),
+              child: Text("Salvar Perfil"),
             ),
           ],
         ),

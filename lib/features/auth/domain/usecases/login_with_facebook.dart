@@ -1,14 +1,21 @@
+import 'package:versaoteste/features/auth/data/models/auth_response.dart';
+import 'package:versaoteste/features/auth/data/repositories/auth_repository.dart';
 
-import '../data/models/user_model.dart';
-import '../repositories/auth_repository.dart';
-
-/// Caso de uso para login com Facebook
 class LoginWithFacebook {
-  final AuthRepository _repository;
+  final AuthRepository authRepository;
 
-  LoginWithFacebook(this._repository);
+  LoginWithFacebook(this.authRepository);
 
-  Future<UserModel?> call() {
-    return _repository.loginWithFacebook();
+  Future<AuthResponse> call() async {
+    try {
+      final user = await authRepository.loginWithFacebook();
+      if (user != null) {
+        return AuthResponse.success(user.id);
+      } else {
+        return AuthResponse.failure('Login com Facebook cancelado ou falhou.');
+      }
+    } catch (e) {
+      return AuthResponse.failure('Erro ao fazer login com Facebook: $e');
+    }
   }
 }

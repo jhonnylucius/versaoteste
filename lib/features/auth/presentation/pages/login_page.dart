@@ -1,64 +1,55 @@
 import 'package:flutter/material.dart';
 
-import '../domain/usecases/login_with_email.dart';
-import '../domain/usecases/login_with_facebook.dart';
-import '../domain/usecases/login_with_google.dart';
-import 'widgets/social_login_buttons.dart';
+import '../widgets/social_login_buttons.dart';
 
 class LoginPage extends StatelessWidget {
-  final LoginWithEmail loginWithEmail;
-  final LoginWithGoogle loginWithGoogle;
-  final LoginWithFacebook loginWithFacebook;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  const LoginPage({
-    super.key,
-    required this.loginWithEmail,
-    required this.loginWithGoogle,
-    required this.loginWithFacebook,
-  });
+  LoginPage({Key? key}) : super(key: key);
+
+  void _loginWithEmail(BuildContext context) {
+    // Adicionar lógica para login com email
+  }
+
+  void _loginWithGoogle(BuildContext context) {
+    // Adicionar lógica para login com Google
+  }
+
+  void _loginWithFacebook(BuildContext context) {
+    // Adicionar lógica para login com Facebook
+  }
 
   @override
   Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(
+        title: Text("Login"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+              decoration: InputDecoration(labelText: "Email"),
             ),
+            SizedBox(height: 8.0),
             TextField(
               controller: passwordController,
-              decoration: const InputDecoration(labelText: "Senha"),
+              decoration: InputDecoration(labelText: "Senha"),
               obscureText: true,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () async {
-                try {
-                  await loginWithEmail(
-                    emailController.text,
-                    passwordController.text,
-                  );
-                  // Navegar para a próxima tela
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Erro ao fazer login: \$e")),
-                  );
-                }
-              },
-              child: const Text("Entrar com Email e Senha"),
+              onPressed: () => _loginWithEmail(context),
+              child: Text("Login com Email"),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0),
             SocialLoginButtons(
-              loginWithGoogle: loginWithGoogle,
-              loginWithFacebook: loginWithFacebook,
+              onGooglePressed: () => _loginWithGoogle(context),
+              onFacebookPressed: () => _loginWithFacebook(context),
             ),
           ],
         ),

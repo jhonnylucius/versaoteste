@@ -1,14 +1,21 @@
+import 'package:versaoteste/features/auth/data/models/auth_response.dart';
+import 'package:versaoteste/features/auth/data/repositories/auth_repository.dart';
 
-import '../data/models/user_model.dart';
-import '../repositories/auth_repository.dart';
-
-/// Caso de uso para login com Google
 class LoginWithGoogle {
-  final AuthRepository _repository;
+  final AuthRepository authRepository;
 
-  LoginWithGoogle(this._repository);
+  LoginWithGoogle(this.authRepository);
 
-  Future<UserModel?> call() {
-    return _repository.loginWithGoogle();
+  Future<AuthResponse> call() async {
+    try {
+      final user = await authRepository.loginWithGoogle();
+      if (user != null) {
+        return AuthResponse.success(user.id);
+      } else {
+        return AuthResponse.failure('Login com Google cancelado ou falhou.');
+      }
+    } catch (e) {
+      return AuthResponse.failure('Erro ao fazer login com Google: $e');
+    }
   }
 }
