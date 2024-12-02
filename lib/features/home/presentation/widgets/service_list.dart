@@ -4,7 +4,7 @@ import 'service_card.dart';
 
 class ServiceList extends StatelessWidget {
   final List<Map<String, dynamic>> services;
-  final Function(Map<String, dynamic>) onServiceTap;
+  final void Function(int index) onServiceTap;
 
   const ServiceList({
     super.key,
@@ -17,8 +17,8 @@ class ServiceList extends StatelessWidget {
     if (services.isEmpty) {
       return const Center(
         child: Text(
-          'Nenhum serviço disponível no momento.',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+          'Nenhum serviço encontrado.',
+          style: TextStyle(fontSize: 16.0),
         ),
       );
     }
@@ -28,10 +28,10 @@ class ServiceList extends StatelessWidget {
       itemBuilder: (context, index) {
         final service = services[index];
         return ServiceCard(
-          serviceName: service['serviceName'],
-          providerName: service['providerName'],
+          serviceName: service['name'],
+          providerName: service['provider'],
           price: service['price'],
-          onTap: () => onServiceTap(service),
+          onTap: () => onServiceTap(index),
         );
       },
     );

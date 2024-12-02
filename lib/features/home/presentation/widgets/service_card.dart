@@ -7,32 +7,53 @@ class ServiceCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const ServiceCard({
-    super.key,
+    Key? key,
     required this.serviceName,
     required this.providerName,
     required this.price,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(8.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
       elevation: 4.0,
-      child: ListTile(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: InkWell(
         onTap: onTap,
-        title: Text(
-          serviceName,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text('Prestador: $providerName'),
-        trailing: Text(
-          'R\$${price.toStringAsFixed(2)}',
-          style:
-              const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      serviceName,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      'Prestador: $providerName',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      'Preço: R\$${price.toStringAsFixed(2)}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 16.0,
+                color: Colors.grey,
+              ),
+            ],
+          ),
         ),
       ),
     );
