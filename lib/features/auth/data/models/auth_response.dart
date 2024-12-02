@@ -1,0 +1,1 @@
+// Placeholder for auth_response.dart
