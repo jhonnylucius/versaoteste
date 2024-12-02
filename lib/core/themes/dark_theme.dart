@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
-import '../constants/app_colors.dart';
+import 'package:versaoteste/core/constants/app_colors.dart';
 
 ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
   primaryColor: AppColors.primaryColor,
-  backgroundColor: Colors.black,
-  textTheme: const TextTheme(
-    bodyText1: TextStyle(color: AppColors.backgroundColor),
-    bodyText2: TextStyle(color: AppColors.backgroundColor),
+  accentColor: AppColors.secondaryColor,
+  scaffoldBackgroundColor: Colors.black,
+  textTheme: TextTheme(
+    headline1: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color: AppColors.backgroundColor,
+    ),
+    bodyText1: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.normal,
+      color: AppColors.backgroundColor,
+    ),
+  ),
+  buttonTheme: ButtonThemeData(
+    buttonColor: AppColors.secondaryColor,
+    textTheme: ButtonTextTheme.primary,
   ),
 );

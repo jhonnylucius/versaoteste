@@ -1,52 +1,46 @@
 import 'package:flutter/material.dart';
 
-import '../domain/usecases/register_user.dart';
-
 class SignupPage extends StatelessWidget {
-  final RegisterUser registerUser;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  const SignupPage({
-    super.key,
-    required this.registerUser,
-  });
+  SignupPage({super.key});
+
+  void _register(BuildContext context) {
+    // Adicionar lógica para registro
+  }
 
   @override
   Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Registrar")),
+      appBar: AppBar(
+        title: Text("Criar Conta"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+              controller: nameController,
+              decoration: InputDecoration(labelText: "Nome Completo"),
             ),
+            SizedBox(height: 8.0),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: "Email"),
+            ),
+            SizedBox(height: 8.0),
             TextField(
               controller: passwordController,
-              decoration: const InputDecoration(labelText: "Senha"),
+              decoration: InputDecoration(labelText: "Senha"),
               obscureText: true,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () async {
-                try {
-                  await registerUser(
-                    emailController.text,
-                    passwordController.text,
-                  );
-                  // Navegar para a próxima tela
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Erro ao registrar: \$e")),
-                  );
-                }
-              },
-              child: const Text("Registrar"),
+              onPressed: () => _register(context),
+              child: Text("Registrar"),
             ),
           ],
         ),
