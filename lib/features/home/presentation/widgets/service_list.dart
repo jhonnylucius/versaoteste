@@ -28,6 +28,7 @@ class ServiceList extends StatelessWidget {
       itemBuilder: (context, index) {
         final service = services[index];
         return ServiceCard(
+          service: service,
           serviceName: service['name'],
           providerName: service['provider'],
           price: service['price'],

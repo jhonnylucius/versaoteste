@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
-  final String serviceName;
-  final String providerName;
-  final double price;
-  final String description;
-  final VoidCallback onBookService;
+  final Map<String, dynamic> service;
 
-  const ServiceDetailsPage({
-    super.key,
-    required this.serviceName,
-    required this.providerName,
-    required this.price,
-    required this.description,
-    required this.onBookService,
-  });
+  const ServiceDetailsPage({super.key, required this.service});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes do Serviço'),
+        title: Text(service['name']),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,33 +17,38 @@ class ServiceDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              serviceName,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              'Prestador: $providerName',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              'Preço: R\$${price.toStringAsFixed(2)}',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 16.0),
-            Text(
-              'Descrição:',
+              service['category'],
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 8),
             Text(
-              description,
-              style: Theme.of(context).textTheme.bodyLarge,
+              'Preço: R\$${service['price']}',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              service['description'] ?? 'Sem descrição disponível.',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const Spacer(),
-            ElevatedButton(
-              onPressed: onBookService,
-              child: const Text('Agendar Serviço'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Redirecionar para agendamento
+                    Navigator.pushNamed(context, '/booking',
+                        arguments: service);
+                  },
+                  child: const Text('Agendar'),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Voltar'),
+                ),
+              ],
             ),
           ],
         ),

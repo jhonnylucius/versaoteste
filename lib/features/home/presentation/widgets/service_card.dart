@@ -1,56 +1,60 @@
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
-  final String serviceName;
-  final String providerName;
-  final double price;
+  final Map<String, dynamic> service;
   final VoidCallback onTap;
 
   const ServiceCard({
-    Key? key,
-    required this.serviceName,
-    required this.providerName,
-    required this.price,
+    super.key,
+    required this.service,
     required this.onTap,
-  }) : super(key: key);
+    required providerName,
+    required serviceName,
+    required price,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4.0,
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: InkWell(
-        onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      serviceName,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      'Prestador: $providerName',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 8.0),
-                    Text(
-                      'Preço: R\$${price.toStringAsFixed(2)}',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
+              Text(
+                service['name'],
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              const Icon(
-                Icons.arrow_forward_ios,
-                size: 16.0,
-                color: Colors.grey,
+              const SizedBox(height: 8),
+              Text(
+                service['category'],
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Preço: R\$${service['price']}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${service['duration']} min',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.blue,
+                  ),
+                ],
               ),
             ],
           ),
