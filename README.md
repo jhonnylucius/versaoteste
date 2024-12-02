@@ -117,4 +117,4 @@ Este projeto está licenciado sob a **MIT License**.
 
 ---
 
-Desenvolvido com ❤️ por [Seu Nome].
+
