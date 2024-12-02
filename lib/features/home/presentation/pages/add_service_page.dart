@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AddServicePage extends StatefulWidget {
-  const AddServicePage({super.key});
+  final Function(String name, double price, String category) onAddService;
+
+  const AddServicePage({
+    super.key,
+    required this.onAddService,
+  });
 
   @override
   State<AddServicePage> createState() => _AddServicePageState();
@@ -10,28 +15,24 @@ class AddServicePage extends StatefulWidget {
 class _AddServicePageState extends State<AddServicePage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _durationController = TextEditingController();
+  String _selectedCategory = 'Geral';
 
   @override
   void dispose() {
     _nameController.dispose();
-    _categoryController.dispose();
     _priceController.dispose();
-    _durationController.dispose();
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submit() {
     if (_formKey.currentState!.validate()) {
-      final newService = {
-        'name': _nameController.text,
-        'category': _categoryController.text,
-        'price': double.parse(_priceController.text),
-        'duration': int.parse(_durationController.text),
-      };
-      Navigator.pop(context, newService);
+      widget.onAddService(
+        _nameController.text,
+        double.parse(_priceController.text),
+        _selectedCategory,
+      );
+      Navigator.pop(context);
     }
   }
 
@@ -51,44 +52,48 @@ class _AddServicePageState extends State<AddServicePage> {
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Nome do Serviço'),
-                validator: (value) => value!.isEmpty
-                    ? 'Por favor, insira o nome do serviço'
-                    : null,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _categoryController,
-                decoration: const InputDecoration(labelText: 'Categoria'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Por favor, insira a categoria' : null,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira o nome do serviço';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _priceController,
-                decoration: const InputDecoration(labelText: 'Preço'),
+                decoration: const InputDecoration(labelText: 'Preço (R\$)'),
                 keyboardType: TextInputType.number,
-                validator: (value) => value!.isEmpty
-                    ? 'Por favor, insira o preço'
-                    : (double.tryParse(value) == null
-                        ? 'Por favor, insira um número válido'
-                        : null),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira o preço do serviço';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Insira um valor numérico válido';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _durationController,
-                decoration:
-                    const InputDecoration(labelText: 'Duração (minutos)'),
-                keyboardType: TextInputType.number,
-                validator: (value) => value!.isEmpty
-                    ? 'Por favor, insira a duração'
-                    : (int.tryParse(value) == null
-                        ? 'Por favor, insira um número válido'
-                        : null),
+              DropdownButtonFormField<String>(
+                value: _selectedCategory,
+                items: const [
+                  DropdownMenuItem(value: 'Geral', child: Text('Geral')),
+                  DropdownMenuItem(value: 'Estética', child: Text('Estética')),
+                  DropdownMenuItem(value: 'Mecânica', child: Text('Mecânica')),
+                  DropdownMenuItem(value: 'Outros', child: Text('Outros')),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCategory = value!;
+                  });
+                },
+                decoration: const InputDecoration(labelText: 'Categoria'),
               ),
               const Spacer(),
               ElevatedButton(
-                onPressed: _submitForm,
-                child: const Text('Salvar Serviço'),
+                onPressed: _submit,
+                child: const Text('Adicionar'),
               ),
             ],
           ),
