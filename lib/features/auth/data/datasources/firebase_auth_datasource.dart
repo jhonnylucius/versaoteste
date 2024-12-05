@@ -39,14 +39,26 @@ class FirebaseAuthDatasource {
 
   Future<UserModel?> loginWithFacebook() async {
     try {
-      final result = await FacebookAuth.instance.login();
-      final credential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-      return _userFromFirebaseUser(userCredential.user);
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        final AccessToken? accessToken = result.accessToken;
+        if (accessToken == null) {
+          throw Exception('AccessToken is null');
+        }
+
+        // Aqui acessamos a propriedade token diretamente do AccessToken
+        final OAuthCredential credential =
+            FacebookAuthProvider.credential(accessToken.tokenString);
+
+        final UserCredential userCredential =
+            await _firebaseAuth.signInWithCredential(credential);
+
+        return _userFromFirebaseUser(userCredential.user);
+      } else {
+        throw Exception('Facebook login failed: ${result.message}');
+      }
     } catch (e) {
-      throw Exception("Erro ao fazer login com Facebook: \$e");
+      throw Exception('Error logging in with Facebook: $e');
     }
   }
 
