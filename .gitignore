@@ -110,3 +110,5 @@ app/google-services.json
 
 
 apphosting.local.yaml
+
+pubspec.lock
