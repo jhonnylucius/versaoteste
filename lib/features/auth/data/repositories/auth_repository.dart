@@ -60,8 +60,9 @@ class AuthRepository {
     try {
       // Inicia o processo de login com Google.
       final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null)
+      if (googleUser == null) {
         return null; // Retorna null se o login for cancelado.
+      }
 
       // Obtém as credenciais de autenticação do Google.
       final googleAuth = await googleUser.authentication;

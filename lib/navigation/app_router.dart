@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/presentation/pages/complete_profile_page.dart';
@@ -35,7 +36,9 @@ class AppRouter {
           builder: (_) => FavoritesPage(
             favoriteProviders: [],
             onProviderTap: (provider) {
-              print("Prestador selecionado: ${provider['name']}");
+              if (kDebugMode) {
+                print("Prestador selecionado: ${provider['name']}");
+              }
             },
           ),
         );
@@ -64,8 +67,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => AddServicePage(
             onAddService: (String name, double price, String description) {
-              print(
-                  "Serviço adicionado: Nome=$name, Preço=$price, Descrição=$description");
+              if (kDebugMode) {
+                print(
+                    "Serviço adicionado: Nome=$name, Preço=$price, Descrição=$description");
+              }
             },
           ),
         );

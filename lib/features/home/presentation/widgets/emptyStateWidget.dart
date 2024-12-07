@@ -1,5 +1,6 @@
-// Importa o pacote Flutter para construir a interface do usuário.
 import 'package:flutter/material.dart';
+
+// Importa o pacote Flutter para construir a interface do usuário.
 
 // Classe `EmptyStateWidget`.
 // Representa um widget genérico para estados vazios, como quando não há dados para exibir.
