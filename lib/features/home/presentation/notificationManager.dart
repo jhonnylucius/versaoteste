@@ -1,4 +1,5 @@
 // Importa o pacote Flutter Local Notifications para gerenciar notificações locais.
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // Classe `NotificationManager`.
@@ -25,7 +26,9 @@ class NotificationManager {
       settings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         // Callback chamado quando o usuário clica na notificação.
-        print('Notification clicked: ${response.payload}');
+        if (kDebugMode) {
+          print('Notification clicked: ${response.payload}');
+        }
       },
     );
   }
