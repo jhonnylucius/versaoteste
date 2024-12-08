@@ -1,4 +1,4 @@
-package com.example.versaoteste
+package com.example.agendapro
 
 import io.flutter.embedding.android.FlutterActivity
 

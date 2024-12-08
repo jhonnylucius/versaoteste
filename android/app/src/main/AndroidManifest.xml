@@ -3,7 +3,7 @@
     package="com.example.agendapro">
 
     <application
-        android:label="AgendaPPRO"
+        android:label="AgendaPRO"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
