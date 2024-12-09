@@ -1,90 +1,98 @@
-// Importa o pacote Flutter para construir a interface do usuário.
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 
-// Importa um widget personalizado para botões de login social.
-import '../widgets/social_login_buttons.dart';
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
-// Classe `LoginPage`.
-// Representa a página de login, permitindo login com email, Google ou Facebook.
-class LoginPage extends StatelessWidget {
-  // Controladores para os campos de texto (email e senha).
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  LoginPageState createState() => LoginPageState();
+}
 
-  // Construtor da classe `LoginPage`.
-  LoginPage({super.key});
+class LoginPageState extends State<LoginPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final Logger _logger = Logger();
 
-  // Método privado para realizar login com email e senha.
-  // Recebe o `BuildContext` para acessar o contexto da interface.
-  void _loginWithEmail(BuildContext context) {
-    // Adicionar lógica para login com email.
-    // Exemplo: autenticar o usuário usando uma API ou Firebase.
+  Future<void> _loginWithEmail() async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // Navegar para a próxima tela
+    } catch (e) {
+      _logger.e('Erro ao fazer login com email: $e');
+    }
   }
 
-  // Método privado para realizar login com Google.
-  // Recebe o `BuildContext` para acessar o contexto da interface.
-  void _loginWithGoogle(BuildContext context) {
-    // Adicionar lógica para login com Google.
-    // Exemplo: integrar com o Google Sign-In.
+  Future<void> _loginWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await _auth.signInWithCredential(credential);
+      // Navegar para a próxima tela
+    } catch (e) {
+      _logger.e('Erro ao fazer login com Google: $e');
+    }
   }
 
-  // Método privado para realizar login com Facebook.
-  // Recebe o `BuildContext` para acessar o contexto da interface.
-  void _loginWithFacebook(BuildContext context) {
-    // Adicionar lógica para login com Facebook.
-    // Exemplo: integrar com o Facebook Login.
+  Future<void> _loginWithFacebook() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        final AccessToken accessToken = result.accessToken!;
+        final AuthCredential credential =
+            FacebookAuthProvider.credential(accessToken.tokenString);
+        await _auth.signInWithCredential(credential);
+        // Navegar para a próxima tela
+      } else {
+        _logger.e('Erro ao fazer login com Facebook: ${result.message}');
+      }
+    } catch (e) {
+      _logger.e('Erro ao fazer login com Facebook: $e');
+    }
   }
 
-  // Método `build` para construir o widget da página de login.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Estrutura principal da página, incluindo barra de título e corpo.
       appBar: AppBar(
-        // Barra de título da página.
-        title: Text("Login"),
+        title: Text('Login'),
       ),
       body: Padding(
-        // Espaçamento interno ao redor do corpo da página.
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          // Define o alinhamento dos widgets como esticado (preencher a largura).
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Campo de texto para inserir o email do usuário.
             TextField(
-              controller:
-                  emailController, // Controlador para gerenciar o texto inserido.
-              decoration:
-                  InputDecoration(labelText: "Email"), // Rótulo do campo.
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'Email'),
             ),
-            SizedBox(height: 8.0), // Espaçamento entre os widgets.
-
-            // Campo de texto para inserir a senha do usuário.
             TextField(
-              controller:
-                  passwordController, // Controlador para gerenciar o texto inserido.
-              decoration:
-                  InputDecoration(labelText: "Senha"), // Rótulo do campo.
-              obscureText: true, // Oculta o texto (usado para campos de senha).
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: 'Senha'),
+              obscureText: true,
             ),
-            SizedBox(height: 16.0), // Espaçamento entre os widgets.
-
-            // Botão para realizar login com email e senha.
             ElevatedButton(
-              onPressed: () =>
-                  _loginWithEmail(context), // Chama o método `_loginWithEmail`.
-              child: Text("Login com Email"), // Texto exibido no botão.
+              onPressed: _loginWithEmail,
+              child: Text('Login com Email'),
             ),
-            SizedBox(height: 16.0), // Espaçamento entre os widgets.
-
-            // Botões de login social (Google e Facebook).
-            // Usam um widget personalizado `SocialLoginButtons`.
-            SocialLoginButtons(
-              onGooglePressed: () => _loginWithGoogle(
-                  context), // Chama o método `_loginWithGoogle`.
-              onFacebookPressed: () => _loginWithFacebook(
-                  context), // Chama o método `_loginWithFacebook`.
+            ElevatedButton(
+              onPressed: _loginWithGoogle,
+              child: Text('Login com Google'),
+            ),
+            ElevatedButton(
+              onPressed: _loginWithFacebook,
+              child: Text('Login com Facebook'),
             ),
           ],
         ),
