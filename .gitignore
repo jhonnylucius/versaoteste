@@ -121,3 +121,4 @@ res/values/strings.xml
 pubspec.lock
 devtools_options.yaml
 .firebaserc
+pubspec.lock
