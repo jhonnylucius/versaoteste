@@ -117,4 +117,108 @@ Este projeto está licenciado sob a **MIT License**.
 
 ---
 
+# Plano de Configuração e Teste do App
 
+1. **Configurar Ambiente**
+2. **Instalar/Atualizar CLIs**
+3. **Configurar Firebase**
+4. **Configurar Projeto**
+5. **Testar Aplicativo**
+
+### **Comandos Passo a Passo**
+
+1. **Verificar/Instalar Node.js**
+
+```jsx
+node --version
+```
+
+Se não instalado, baixe do nodejs.org
+
+1. **Instalar Firebase CLI**
+
+```jsx
+npm install -g firebase-tools
+```
+
+3. **Login no Firebase**
+
+```jsx
+firebase login
+```
+
+1. **Instalar FlutterFire CLI** 
+
+```jsx
+dart pub global activate flutterfire_cli
+```
+
+1. **Configurar Firebase no Projeto**
+
+```jsx
+flutterfire configure --project=<seu projeto no firebase>
+```
+
+6. **Limpar e Atualizar Projeto Flutter**
+
+```bash
+flutter clean
+flutter pub get
+flutter pub upgrade
+```
+
+1. **Verificar Dispositivos Disponíveis**
+
+```jsx
+flutter devices
+```
+
+1. **Verificar Status do Flutter**
+
+```jsx
+flutter doctor
+```
+
+9. **Executar em Modo Debug**
+
+```jsx
+flutter run
+```
+
+10. **Build Release APK**
+
+```jsx
+flutter build apk --release
+```
+
+1. **Localização do APK Gerado**
+
+```jsx
+build/app/outputs/flutter-apk/app-release.apk
+```
+
+### **Comandos Extras (Se Necessário)**
+
+- **Ativar Web**
+
+```jsx
+flutter config --enable-web
+```
+
+• **Executar na Web**
+
+```jsx
+flutter run -d chrome
+```
+
+• **Atualizar Firebase Tools**
+
+```jsx
+npm install -g firebase-tools@latest
+```
+
+• **Verificar Versão do Firebase**
+
+```jsx
+firebase --version
+```
