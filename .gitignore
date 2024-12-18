@@ -122,3 +122,4 @@ pubspec.lock
 devtools_options.yaml
 .firebaserc
 pubspec.lock
+web/index.html
