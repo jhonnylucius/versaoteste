@@ -118,3 +118,6 @@ packages/flutter_tools/gradle/bin/main/flutter.groovy
 scr/flutter_windows_3.24.5-stable/flutter/packages/flutter_tools/gradle/bin/main/native_plugin_loader.groovy
 
 res/values/strings.xml
+pubspec.lock
+devtools_options.yaml
+.firebaserc
