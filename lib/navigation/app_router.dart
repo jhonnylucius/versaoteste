@@ -104,15 +104,18 @@ class AppRouter {
         return _errorRoute('Rota não definida: ${settings.name}');
     }
   }
+}
 
-  // Método estático para gerar rotas de erro.
-  static Route<dynamic> _errorRoute(String message) {
-    return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        body: Center(
-          child: Text(message),
-        ),
+// Método para retornar uma rota de erro.
+Route<dynamic> _errorRoute(String message) {
+  return MaterialPageRoute(
+    builder: (_) => Scaffold(
+      appBar: AppBar(
+        title: const Text('Erro'),
       ),
-    );
-  }
+      body: Center(
+        child: Text(message),
+      ),
+    ),
+  );
 }

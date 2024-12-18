@@ -36,18 +36,24 @@ class HomePage extends StatelessWidget {
         // Adiciona um espaçamento interno ao redor da lista de serviços.
         padding: const EdgeInsets.all(8.0),
         // Widget personalizado que exibe a lista de serviços.
-        child: ServiceList(
-          services: services, // Passa a lista de serviços para o `ServiceList`.
-          onServiceTap: (index) {
-            // Obtém o serviço selecionado pelo índice.
-            final selectedService = services[index];
-            // Navega para a página de detalhes do serviço, passando o serviço como argumento.
-            Navigator.pushNamed(
-              context,
-              '/serviceDetails', // Nome da rota para a página de detalhes.
-              arguments: selectedService, // Argumentos passados para a rota.
-            );
+        child: RefreshIndicator(
+          onRefresh: () async {
+            // Recarregar lista de serviços
           },
+          child: ServiceList(
+            services:
+                services, // Passa a lista de serviços para o `ServiceList`.
+            onServiceTap: (index) {
+              // Obtém o serviço selecionado pelo índice.
+              final selectedService = services[index];
+              // Navega para a página de detalhes do serviço, passando o serviço como argumento.
+              Navigator.pushNamed(
+                context,
+                '/serviceDetails', // Nome da rota para a página de detalhes.
+                arguments: selectedService, // Argumentos passados para a rota.
+              );
+            },
+          ),
         ),
       ),
       // Botão flutuante de ação.

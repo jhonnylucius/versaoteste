@@ -18,9 +18,12 @@ class AppConstants {
   static const int timeoutDuration = 30; // em segundos
 
   // Agrupamento de mensagens padrão, utilizadas para feedback ao usuário em diferentes cenários.
+
+  static const Duration cacheValidityDuration = Duration(hours: 1);
+
   // Essas mensagens ajudam a centralizar os textos, facilitando alterações futuras
   // e permitindo uma consistência maior na comunicação com o usuário.
-
+  static const Duration apiTimeout = Duration(seconds: 30);
   // Mensagem genérica de erro. É exibida ao usuário quando ocorre um problema
   // que não pode ser identificado de forma mais específica.
   static const String genericErrorMessage =

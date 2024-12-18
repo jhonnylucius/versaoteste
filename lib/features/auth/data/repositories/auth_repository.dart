@@ -17,6 +17,9 @@ class AuthRepository {
   // Instância do FacebookAuth para login com Facebook.
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
 
+  // Stream para monitorar mudanças no estado de autenticação do usuário
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
   // Método para login com email e senha.
   // Retorna um objeto UserModel correspondente ao usuário autenticado, ou null em caso de falha.
   Future<UserModel?> loginWithEmail(String email, String password) async {
