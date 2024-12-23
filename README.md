@@ -1,5 +1,6 @@
 
 # 📅 AgendaPro - Solução de Agendamentos Inteligente
+... em desenvolvimento
 
 AgendaPro é um aplicativo voltado para agendamento e gestão de serviços, ideal para clientes e prestadores que desejam centralizar e simplificar suas interações. Este projeto foi desenvolvido utilizando **Flutter** com **Dart** e se destaca pela organização modular e estrutura profissional, garantindo escalabilidade e facilidade de manutenção.
 
